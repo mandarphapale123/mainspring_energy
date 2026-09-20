@@ -1,0 +1,6 @@
+# Python
+__pycache__/
+*.pyc
+
+# JetBrains project files (local IDE settings, not part of the deliverable)
+.idea/
