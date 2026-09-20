@@ -1,6 +1,6 @@
 """A minimal HTTP service using only the Python standard library.
 
-Exposes a single endpoint, GET /, which returns a plain-text greeting.
+Exposes a single endpoint, GET /, which returns a plain text greeting.
 Listens on the port given by the PORT environment variable (Cloud Run
 sets this automatically), defaulting to 8080 for local runs.
 """
@@ -27,7 +27,7 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self._send_text(404, "Not Found\n")
 
-    # Quiet, single-line request logging instead of the default verbose format.
+    # Quiet, single line request logging instead of the default verbose format.
     def log_message(self, format: str, *args) -> None:
         print(f"{self.address_string()} - {format % args}")
 
