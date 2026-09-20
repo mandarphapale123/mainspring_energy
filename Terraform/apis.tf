@@ -8,8 +8,11 @@
 # with no manual `gcloud services enable ...` step beforehand.
 locals {
   required_apis = [
-    "run.googleapis.com",               # Cloud Run
-    "iam.googleapis.com",               # creating the dedicated service account
+    # Cloud Run
+    "run.googleapis.com",
+    # Creating the dedicated service account
+    "iam.googleapis.com",
+    # Reading/checking project-level resource state
     "cloudresourcemanager.googleapis.com",
   ]
 }

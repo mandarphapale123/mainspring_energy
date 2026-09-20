@@ -21,6 +21,7 @@ variable "invoker_members" {
     invoker access via this resource (the service remains non-public; it is
     never granted to allUsers).
   EOT
+
   type    = list(string)
   default = []
 
@@ -33,6 +34,7 @@ variable "invoker_members" {
       !contains(var.invoker_members, "allUsers") &&
       !contains(var.invoker_members, "allAuthenticatedUsers")
     )
+
     error_message = "invoker_members must not include \"allUsers\" or \"allAuthenticatedUsers\" — this service must not be made publicly invokable."
   }
 }
