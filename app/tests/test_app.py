@@ -1,12 +1,12 @@
-"""End-to-end tests for the Cloud Run service entrypoint (app.py).
+"""End to end tests for the Cloud Run service entrypoint (app.py).
 
-Each test launches the real `python3 app.py` process — the exact command
-the Dockerfile's CMD runs — and makes real HTTP requests against it, so the
+Each test launches the real `python3 app.py` process, the exact command
+the Dockerfile's CMD runs, and makes real HTTP requests against it, so the
 tests exercise what actually ships in the container image, not just an
 imported function.
 
-Zero third-party test dependencies: stdlib subprocess/socket/urllib only,
-matching the service's own zero-dependency footprint.
+Zero third party test dependencies: stdlib subprocess/socket/urllib only,
+matching the service's own zero dependency footprint.
 
 Run with:
     cd app && python3 -m unittest discover -s tests -v

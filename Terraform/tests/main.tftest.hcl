@@ -7,7 +7,7 @@
 # exercise `command = plan`, checking the shape of what Terraform *would*
 # create.
 #
-# NOTE: `terraform test` auto-loads terraform.tfvars from this directory
+# NOTE: `terraform test` auto loads terraform.tfvars from this directory
 # just like `plan`/`apply` would, and a tfvars value beats a variable's own
 # default. The variables block below pins every input explicitly (including
 # invoker_members = []) so these tests stay hermetic regardless of whatever
@@ -38,7 +38,7 @@ run "creates_dedicated_service_account" {
 run "default_invoker_members_grants_no_access" {
   command = plan
   # invoker_members not overridden here -> uses the [] pinned in the file's
-  # variables block above (not terraform.tfvars's real-world value).
+  # variables block above (not terraform.tfvars's real world value).
 
   assert {
     condition     = length(google_cloud_run_v2_service_iam_member.invokers) == 0
