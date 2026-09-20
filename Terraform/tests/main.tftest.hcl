@@ -6,13 +6,20 @@
 # access to Google APIs, and never touch real infrastructure. They only
 # exercise `command = plan`, checking the shape of what Terraform *would*
 # create.
+#
+# NOTE: `terraform test` auto-loads terraform.tfvars from this directory
+# just like `plan`/`apply` would, and a tfvars value beats a variable's own
+# default. The variables block below pins every input explicitly (including
+# invoker_members = []) so these tests stay hermetic regardless of whatever
+# real values happen to be sitting in terraform.tfvars.
 
 mock_provider "google" {}
 
 variables {
-  project_id = "test-project"
-  region     = "us-central1"
-  image      = "docker.io/library/nginx:latest"
+  project_id      = "test-project"
+  region          = "us-central1"
+  image           = "docker.io/library/nginx:latest"
+  invoker_members = []
 }
 
 # --- Dedicated service account -------------------------------------------
@@ -30,7 +37,8 @@ run "creates_dedicated_service_account" {
 
 run "default_invoker_members_grants_no_access" {
   command = plan
-  # invoker_members not set here -> uses its default: []
+  # invoker_members not overridden here -> uses the [] pinned in the file's
+  # variables block above (not terraform.tfvars's real-world value).
 
   assert {
     condition     = length(google_cloud_run_v2_service_iam_member.invokers) == 0
@@ -107,10 +115,10 @@ run "service_runs_supplied_image" {
   }
 
   assert {
-    # NOTE: if your installed google provider version represents `template`
-    # as a repeated block instead of a single nested object, change this to
-    # google_cloud_run_v2_service.mainspring_service.template[0].containers[0].image
-    condition     = google_cloud_run_v2_service.mainspring_service.template.containers[0].image == "docker.io/example/mainspring:v1"
+    # google_cloud_run_v2_service_iam_member represents `template` as a
+    # repeated block (a list of objects) in this provider version, so it
+    # must be indexed numerically rather than accessed as a single object.
+    condition     = google_cloud_run_v2_service.mainspring_service.template[0].containers[0].image == "docker.io/example/mainspring:v1"
     error_message = "Cloud Run container image did not match var.image."
   }
 }
