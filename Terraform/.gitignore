@@ -1,0 +1,10 @@
+# Local Terraform state (expected — no remote backend is used)
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Terraform working directory (provider binaries — not portable, not
+# committed). .terraform.lock.hcl is intentionally NOT listed here: it's
+# committed so `terraform init` always resolves the same provider version
+# this was tested against.
+.terraform/
